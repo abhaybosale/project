@@ -1,0 +1,221 @@
+** start of undefined **
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn.freecodecamp.org/universal/favicons/favicon.ico"
+    />
+    <title>Telephone Number Validator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <img
+        class="freecodecamp-logo"
+        src="https://cdn.freecodecamp.org/platform/universal/fcc_primary.svg"
+        alt="freeCodeCamp Logo"
+      />
+      <h1>Telephone Number Validator</h1>
+      <div class="phone-container">
+        <div class="phone-background">
+          <div class="phone-camera"></div>
+        </div>
+        <label for="user-input">Enter a Phone Number:</label>
+        <input maxlength="20" type="text" id="user-input" value="" />
+        <div id="results-div"></div>
+        <div class="phone-footer">
+          <button class="btn-styles" id="check-btn">Check</button>
+          <button class="btn-styles" id="clear-btn">Clear</button>
+        </div>
+      </div>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+
+** end of undefined **
+
+** start of undefined **
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --phone-colors: #dfdfe2;
+  --center-text: center;
+  --gray-00: #fff;
+}
+
+body {
+  background-color: #3b3b4f;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #0a0a23;
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 40px 10px;
+}
+
+.freecodecamp-logo {
+  width: 100%;
+  height: 30px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  color: white;
+  width: 100%;
+  max-width: 480px;
+  margin: 15px 0;
+  text-align: var(--center-text);
+}
+
+.phone-container {
+  position: relative;
+  background-color: var(--phone-colors);
+  width: 250px;
+  height: 460px;
+  margin: 30px auto;
+  border-radius: 15px;
+  border: 15px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.phone-background {
+  background-color: black;
+  width: 100%;
+  height: 25px;
+}
+
+.phone-camera {
+  background-color: var(--phone-colors);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: auto;
+}
+
+label {
+  margin: 10px auto 5px;
+}
+
+#user-input {
+  display: block;
+  margin: 10px auto;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 10px;
+  text-align: var(--center-text);
+  width: 90%;
+  height: 42px;
+  font-size: 16px;
+}
+
+.phone-footer {
+  background-color: black;
+  width: 100%;
+  height: 40px;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-styles {
+  cursor: pointer;
+  width: 100px;
+  margin: 10px;
+  color: #0a0a23;
+  font-size: 18px;
+  background-color: #ffffff;
+  background-image: linear-gradient(#ffffff, #928d86);
+  border-color: #ffffff;
+  border-width: 3px;
+}
+
+#results-div {
+  overflow-y: auto;
+  height: 265px;
+  width: 100%;
+}
+
+.results-text {
+  font-size: 1.2rem;
+  padding: 5px;
+  text-align: var(--center-text);
+  margin: 10px 0;
+}
+
+
+** end of undefined **
+
+** start of undefined **
+
+const userInput = document.getElementById('user-input');
+const checkBtn = document.getElementById('check-btn');
+const clearBtn = document.getElementById('clear-btn');
+const resultsDiv = document.getElementById('results-div');
+
+const checkValidNumber = input => {
+  if (input === '') {
+    alert('Please provide a phone number');
+    return;
+  }
+  const countryCode = '^(1\\s?)?';
+  const areaCode = '(\\([0-9]{3}\\)|[0-9]{3})';
+  const spacesDashes = '[\\s\\-]?';
+  const phoneNumber = '[0-9]{3}[\\s\\-]?[0-9]{4}$';
+  const phoneRegex = new RegExp(
+    `${countryCode}${areaCode}${spacesDashes}${phoneNumber}`
+  );
+
+  const pTag = document.createElement('p');
+  pTag.className = 'results-text';
+  phoneRegex.test(input)
+    ? (pTag.style.color = '#00471b')
+    : (pTag.style.color = '#4d3800');
+  pTag.appendChild(
+    document.createTextNode(
+      `${phoneRegex.test(input) ? 'Valid' : 'Invalid'} US number: ${input}`
+    )
+  );
+  resultsDiv.appendChild(pTag);
+};
+
+checkBtn.addEventListener('click', () => {
+  checkValidNumber(userInput.value);
+  userInput.value = '';
+});
+
+userInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    checkValidNumber(userInput.value);
+    userInput.value = '';
+  }
+});
+
+clearBtn.addEventListener('click', () => {
+  resultsDiv.textContent = '';
+});
+
+
+** end of undefined **
+
